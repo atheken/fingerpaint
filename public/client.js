@@ -3,6 +3,7 @@
   window.Fingerpaint = {};
   Fingerpaint.Client = (function() {
     function Client() {
+      var doc;
       this.users = {};
       this.socket = io.connect("http://" + document.location.hostname + "/");
       this.canvas = $('#draw');
@@ -37,7 +38,8 @@
         user = this.users[id];
         return this.changeNick(user, nick);
       }, this));
-      $(document).mousemove(__bind(function(event) {
+      doc = $(document);
+      doc.mousemove(__bind(function(event) {
         var position;
         position = {
           x: event.pageX,
@@ -45,13 +47,29 @@
         };
         return this.socket.json.emit('move', position, this.drawing);
       }, this));
-      $(document).mousedown(__bind(function(event) {
+      doc.mousedown(__bind(function(event) {
         return this.drawing = true;
       }, this));
-      $(document).mouseup(__bind(function(event) {
+      doc.mouseup(__bind(function(event) {
         return this.drawing = false;
       }, this));
-      $(document).keyup(__bind(function(event) {
+      if (doc.touchmove) {
+        doc.touchmove(__bind(function(event) {
+          var position;
+          position = {
+            x: event.pageX,
+            y: event.pageY
+          };
+          return this.socket.json.emit('move', position, this.drawing);
+        }, this));
+        doc.touchstart(__bind(function(event) {
+          this.drawing = true;
+          return doc.touchstop(__bind(function(event) {
+            return this.drawing = false;
+          }, this));
+        }, this));
+      }
+      doc.keyup(__bind(function(event) {
         var nick;
         if (event.keyCode === 78) {
           nick = prompt("what's your name?");

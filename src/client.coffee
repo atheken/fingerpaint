@@ -32,23 +32,39 @@ class Fingerpaint.Client
 			user = @users[id]
 			@changeNick user, nick
 		
-		$(document).mousemove (event) =>
+		doc = $(document)
+		
+		doc.mousemove (event) =>
 			position =
 				x: event.pageX
 				y: event.pageY
 			@socket.json.emit 'move', position, @drawing
-		
-		$(document).mousedown (event) =>
+
+		doc.mousedown (event) =>
 			@drawing = true
-		
-		$(document).mouseup (event) =>
+
+		doc.mouseup (event) =>
 			@drawing = false
-			
-		$(document).keyup (event) =>
+
+		if doc.touchmove
+
+  	  doc.touchmove (event) =>
+    		position =
+    			x: event.pageX
+    			y: event.pageY
+    		@socket.json.emit 'move', position, @drawing
+
+    	doc.touchstart (event) =>
+    		@drawing = true
+
+      doc.touchstop (event) =>
+        @drawing = false
+
+		doc.keyup (event) =>
 			if event.keyCode is 78
 				nick = prompt "what's your name?"
 				@socket.emit 'nick', nick
-	
+
 	resizeCanvas: ->
 		@canvas.attr
 			width: @viewport.width()
