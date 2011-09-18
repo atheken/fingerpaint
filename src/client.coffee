@@ -33,27 +33,31 @@ class Fingerpaint.Client
 			@changeNick user, nick
 		
 		doc = $(document)
-		
-		doc.mousemove (event) =>
-			position =
-				x: event.pageX
-				y: event.pageY
-			@socket.json.emit 'move', position, @drawing
+			
+		throttle = (event) =>
+      position =
+        x : event.pageX
+        y : event.pageY
 
+      @socket.json.emit 'move', position, @drawing
+    	
+		doc.mousemove _.throttle throttle, 50
 		doc.mousedown (event) =>
 			@drawing = true
 
 		doc.mouseup (event) =>
       @drawing = false
-
-    document.addEventListener "touchmove", (event) =>
+    
+    moveProto = (event) =>
       event.preventDefault()
       position =
         x : event.targetTouches[0].pageX
         y : event.targetTouches[0].pageY
-    
+
       @socket.json.emit 'move', position, @drawing
-      
+    
+    document.addEventListener "touchmove", _.throttle moveProto, 50
+  
     document.addEventListener "touchstart", (event) =>
       event.preventDefault()
       position =

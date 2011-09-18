@@ -34,9 +34,6 @@ io.set 'log level', 0
 users = {}
 
 io.sockets.on 'connection', (socket) ->
-	
-	sys.puts "[fingerpaint] user #{socket.id} connected"
-	
 	user =
 		id:    socket.id
 		nick:  socket.id
@@ -46,8 +43,10 @@ io.sockets.on 'connection', (socket) ->
 	
 	socket.json.emit 'hello', user, users
 	socket.broadcast.json.emit 'join', user
+	#this should a replay of everything that has happened so far.
 	
 	socket.on 'move', (position, drawing) ->
+	  #this should attempt to send this into a db.
 		io.sockets.json.emit 'move', socket.id, position, drawing
 	
 	socket.on 'nick', (nick) ->
@@ -57,4 +56,3 @@ io.sockets.on 'connection', (socket) ->
 	socket.on 'disconnect', ->
 		delete users[socket.id]
 		socket.broadcast.emit 'part', user
-		sys.puts "[fingerpaint] user #{socket.id} disconnected"

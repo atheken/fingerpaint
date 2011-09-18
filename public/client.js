@@ -3,7 +3,7 @@
   window.Fingerpaint = {};
   Fingerpaint.Client = (function() {
     function Client() {
-      var doc;
+      var doc, moveProto, throttle;
       this.users = {};
       this.socket = io.connect("http://" + document.location.hostname + "/");
       this.canvas = $('#draw');
@@ -39,21 +39,22 @@
         return this.changeNick(user, nick);
       }, this));
       doc = $(document);
-      doc.mousemove(__bind(function(event) {
+      throttle = __bind(function(event) {
         var position;
         position = {
           x: event.pageX,
           y: event.pageY
         };
         return this.socket.json.emit('move', position, this.drawing);
-      }, this));
+      }, this);
+      doc.mousemove(_.throttle(throttle, 50));
       doc.mousedown(__bind(function(event) {
         return this.drawing = true;
       }, this));
       doc.mouseup(__bind(function(event) {
         return this.drawing = false;
       }, this));
-      document.addEventListener("touchmove", __bind(function(event) {
+      moveProto = __bind(function(event) {
         var position;
         event.preventDefault();
         position = {
@@ -61,7 +62,8 @@
           y: event.targetTouches[0].pageY
         };
         return this.socket.json.emit('move', position, this.drawing);
-      }, this));
+      }, this);
+      document.addEventListener("touchmove", _.throttle(moveProto, 50));
       document.addEventListener("touchstart", __bind(function(event) {
         var position;
         event.preventDefault();
