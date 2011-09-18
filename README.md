@@ -6,6 +6,6 @@ Then do:
 
 	./fingerpaint
 
-Alternatively, you can use foreman (a ruby gem for running Profiles), to start the app (as will happen on Heroku):
+Alternatively, you can use foreman (a ruby gem for running Procfiles), to start the app (a la Heroku):
 
 	foreman start
