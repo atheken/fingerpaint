@@ -47,7 +47,7 @@
         };
         return this.socket.json.emit('move', position, this.drawing);
       }, this);
-      doc.mousemove(_.throttle(throttle, 50));
+      doc.mousemove(_.throttle(throttle, 10));
       doc.mousedown(__bind(function(event) {
         return this.drawing = true;
       }, this));
@@ -63,7 +63,7 @@
         };
         return this.socket.json.emit('move', position, this.drawing);
       }, this);
-      document.addEventListener("touchmove", _.throttle(moveProto, 50));
+      document.addEventListener("touchmove", _.throttle(moveProto, 10));
       document.addEventListener("touchstart", __bind(function(event) {
         var position;
         event.preventDefault();

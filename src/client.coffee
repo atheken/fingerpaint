@@ -41,7 +41,7 @@ class Fingerpaint.Client
 
       @socket.json.emit 'move', position, @drawing
     	
-		doc.mousemove _.throttle throttle, 50
+		doc.mousemove _.throttle throttle, 10
 		doc.mousedown (event) =>
 			@drawing = true
 
@@ -56,7 +56,7 @@ class Fingerpaint.Client
 
       @socket.json.emit 'move', position, @drawing
     
-    document.addEventListener "touchmove", _.throttle moveProto, 50
+    document.addEventListener "touchmove", _.throttle moveProto, 10
   
     document.addEventListener "touchstart", (event) =>
       event.preventDefault()
