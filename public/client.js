@@ -54,7 +54,7 @@
         var position;
         this.drawing = false;
         doc.addEventListener("touchmove", __bind(function(event) {
-          return doc.append('move');
+          return alert('move');
         }, this));
         position = {
           x: event.pageX,
@@ -62,11 +62,11 @@
         };
         this.socket.json.emit('move', position, this.drawing);
         doc.addEventListener("touchstart", __bind(function(event) {
-          return doc.append('start');
+          return alert('start');
         }, this));
         this.drawing = true;
         return doc.addEventListener("touchstop", __bind(function(event) {
-          doc.append('stop');
+          alert('stop');
           return this.drawing = false;
         }, this));
       }, this));
