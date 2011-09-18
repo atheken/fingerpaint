@@ -51,16 +51,24 @@
         return this.drawing = true;
       }, this));
       doc.mouseup(__bind(function(event) {
-        this.drawing = false;
-        doc.addEventListener("touchmove", function(event) {
-          return alert('move');
-        });
-        doc.addEventListener("touchstart", function(event) {
-          return alert('start');
-        });
-        return doc.addEventListener("touchstop", function(event) {
-          return alert('stop');
-        });
+        return this.drawing = false;
+      }, this));
+      doc.addEventListener("touchmove", __bind(function(event) {
+        var position;
+        alert('move');
+        position = {
+          x: event.pageX,
+          y: event.pageY
+        };
+        return this.socket.json.emit('move', position, this.drawing);
+      }, this));
+      doc.addEventListener("touchstart", __bind(function(event) {
+        alert('start');
+        return this.drawing = true;
+      }, this));
+      doc.addEventListener("touchstop", __bind(function(event) {
+        alert('stop');
+        return this.drawing = false;
       }, this));
       doc.keyup(__bind(function(event) {
         var nick;
