@@ -51,10 +51,8 @@
         return this.drawing = true;
       }, this));
       doc.mouseup(__bind(function(event) {
-        return this.drawing = false;
-      }, this));
-      if (doc.touchmove) {
-        doc.touchmove(__bind(function(event) {
+        this.drawing = false;
+        doc.bind("ontouchmove", __bind(function(event) {
           var position;
           position = {
             x: event.pageX,
@@ -62,13 +60,13 @@
           };
           return this.socket.json.emit('move', position, this.drawing);
         }, this));
-        doc.touchstart(__bind(function(event) {
+        return doc.bind("ontouchstart", __bind(function(event) {
           this.drawing = true;
-          return doc.touchstop(__bind(function(event) {
+          return doc.bind("ontouchstop", __bind(function(event) {
             return this.drawing = false;
           }, this));
         }, this));
-      }
+      }, this));
       doc.keyup(__bind(function(event) {
         var nick;
         if (event.keyCode === 78) {

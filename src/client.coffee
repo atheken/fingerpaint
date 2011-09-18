@@ -46,19 +46,17 @@ class Fingerpaint.Client
 		doc.mouseup (event) =>
 			@drawing = false
 
-		if doc.touchmove
+	  doc.bind "ontouchmove", (event) =>
+  		position =
+  			x: event.pageX
+  			y: event.pageY
+  		@socket.json.emit 'move', position, @drawing
 
-  	  doc.touchmove (event) =>
-    		position =
-    			x: event.pageX
-    			y: event.pageY
-    		@socket.json.emit 'move', position, @drawing
+  	doc.bind "ontouchstart", (event) =>
+  		@drawing = true
 
-    	doc.touchstart (event) =>
-    		@drawing = true
-
-      doc.touchstop (event) =>
-        @drawing = false
+    doc.bind "ontouchstop", (event) =>
+      @drawing = false
 
 		doc.keyup (event) =>
 			if event.keyCode is 78
