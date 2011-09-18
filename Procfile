@@ -1,1 +1,1 @@
-web: node fingerpaint.js
+web: coffee fingerpaint.coffee
