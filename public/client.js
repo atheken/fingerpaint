@@ -53,7 +53,7 @@
       doc.mouseup(__bind(function(event) {
         return this.drawing = false;
       }, this));
-      doc.addEventListener("touchmove", __bind(function(event) {
+      document.addEventListener("touchmove", __bind(function(event) {
         var position;
         position = {
           x: event.targetTouches[0].pageX,
@@ -61,10 +61,10 @@
         };
         return this.socket.json.emit('move', position, this.drawing);
       }, this));
-      doc.addEventListener("touchstart", __bind(function(event) {
+      document.addEventListener("touchstart", __bind(function(event) {
         return this.drawing = true;
       }, this));
-      doc.addEventListener("touchend", __bind(function(event) {
+      document.addEventListener("touchend", __bind(function(event) {
         return this.drawing = false;
       }, this));
       doc.keyup(__bind(function(event) {
