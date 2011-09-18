@@ -63,6 +63,7 @@
         return this.socket.json.emit('move', position, this.drawing);
       }, this));
       document.addEventListener("touchstart", __bind(function(event) {
+        this.socket.json.emit('move', position, this.drawing);
         return this.drawing = true;
       }, this));
       document.addEventListener("touchend", __bind(function(event) {

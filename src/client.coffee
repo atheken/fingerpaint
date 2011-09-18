@@ -55,6 +55,7 @@ class Fingerpaint.Client
       @socket.json.emit 'move', position, @drawing
       
     document.addEventListener "touchstart", (event) =>
+      @socket.json.emit 'move', position, @drawing
       @drawing = true
     
     document.addEventListener "touchend", (event) =>
