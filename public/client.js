@@ -51,24 +51,16 @@
         return this.drawing = true;
       }, this));
       doc.mouseup(__bind(function(event) {
-        var position;
         this.drawing = false;
-        doc.addEventListener("touchmove", __bind(function(event) {
+        doc.addEventListener("touchmove", function(event) {
           return alert('move');
-        }, this));
-        position = {
-          x: event.pageX,
-          y: event.pageY
-        };
-        this.socket.json.emit('move', position, this.drawing);
-        doc.addEventListener("touchstart", __bind(function(event) {
+        });
+        doc.addEventListener("touchstart", function(event) {
           return alert('start');
-        }, this));
-        this.drawing = true;
-        return doc.addEventListener("touchstop", __bind(function(event) {
-          alert('stop');
-          return this.drawing = false;
-        }, this));
+        });
+        return doc.addEventListener("touchstop", function(event) {
+          return alert('stop');
+        });
       }, this));
       doc.keyup(__bind(function(event) {
         var nick;
