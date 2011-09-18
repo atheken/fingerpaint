@@ -46,15 +46,19 @@ class Fingerpaint.Client
 		doc.mouseup (event) =>
       @drawing = false
 
-    doc.addEventListener "touchmove", (event) ->
-      alert 'move'
+    doc.addEventListener "touchmove", (event) =>
+      position =
+        x : event.targetTouches[0].pageX
+        y : event.targetTouches[0].pageY
+    
+      @socket.json.emit 'move', position, @drawing
+      
+    doc.addEventListener "touchstart", (event) =>
+      @drawing = true
+    
+    doc.addEventListener "touchend", (event) =>
+      @drawing = false
 
-    doc.addEventListener "touchstart", (event) ->
-      alert 'start'
-      
-    doc.addEventListener "touchstop", (event) ->
-      alert 'stop'
-      
 		doc.keyup (event) =>
 			if event.keyCode is 78
 				nick = prompt "what's your name?"

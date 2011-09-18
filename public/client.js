@@ -53,15 +53,20 @@
       doc.mouseup(__bind(function(event) {
         return this.drawing = false;
       }, this));
-      doc.addEventListener("touchmove", function(event) {
-        return alert('move');
-      });
-      doc.addEventListener("touchstart", function(event) {
-        return alert('start');
-      });
-      doc.addEventListener("touchstop", function(event) {
-        return alert('stop');
-      });
+      doc.addEventListener("touchmove", __bind(function(event) {
+        var position;
+        position = {
+          x: event.targetTouches[0].pageX,
+          y: event.targetTouches[0].pageY
+        };
+        return this.socket.json.emit('move', position, this.drawing);
+      }, this));
+      doc.addEventListener("touchstart", __bind(function(event) {
+        return this.drawing = true;
+      }, this));
+      doc.addEventListener("touchend", __bind(function(event) {
+        return this.drawing = false;
+      }, this));
       doc.keyup(__bind(function(event) {
         var nick;
         if (event.keyCode === 78) {
