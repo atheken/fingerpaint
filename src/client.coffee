@@ -46,18 +46,18 @@ class Fingerpaint.Client
 		doc.mouseup (event) =>
 			@drawing = false
 
-	  doc.bind "touchmove", (event) =>
+	  doc.addEventListener "touchmove", (event) =>
 	    doc.append('move')
   		position =
   			x: event.pageX
   			y: event.pageY
   		@socket.json.emit 'move', position, @drawing
 
-  	doc.bind "touchstart", (event) =>
+  	doc.addEventListener "touchstart", (event) =>
       doc.append('start')
   		@drawing = true
 
-    doc.bind "touchstop", (event) =>
+    doc.addEventListener "touchstop", (event) =>
       doc.append('stop')
       @drawing = false
 

@@ -53,7 +53,7 @@
       doc.mouseup(__bind(function(event) {
         var position;
         this.drawing = false;
-        doc.bind("touchmove", __bind(function(event) {
+        doc.addEventListener("touchmove", __bind(function(event) {
           return doc.append('move');
         }, this));
         position = {
@@ -61,11 +61,11 @@
           y: event.pageY
         };
         this.socket.json.emit('move', position, this.drawing);
-        doc.bind("touchstart", __bind(function(event) {
+        doc.addEventListener("touchstart", __bind(function(event) {
           return doc.append('start');
         }, this));
         this.drawing = true;
-        return doc.bind("touchstop", __bind(function(event) {
+        return doc.addEventListener("touchstop", __bind(function(event) {
           doc.append('stop');
           return this.drawing = false;
         }, this));
