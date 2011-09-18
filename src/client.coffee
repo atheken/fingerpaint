@@ -47,7 +47,7 @@ class Fingerpaint.Client
       @drawing = false
 
     document.addEventListener "touchmove", (event) =>
-      event.preventDefault
+      event.preventDefault()
       position =
         x : event.targetTouches[0].pageX
         y : event.targetTouches[0].pageY

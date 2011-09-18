@@ -55,7 +55,7 @@
       }, this));
       document.addEventListener("touchmove", __bind(function(event) {
         var position;
-        event.preventDefault;
+        event.preventDefault();
         position = {
           x: event.targetTouches[0].pageX,
           y: event.targetTouches[0].pageY
